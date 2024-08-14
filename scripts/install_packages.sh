@@ -40,6 +40,10 @@ rpm-ostree install neovim
 # System Tools
 rpm-ostree install zsh btop iftop iotop tmux inxi
 
+# Tailscale
+curl -L -o /etc/yum.repos.d/tailscale.repo https://pkgs.tailscale.com/stable/fedora/tailscale.repo
+rpm-ostree install tailscale
+
 # this would install a package from rpmfusion
 # rpm-ostree install vlc
 
