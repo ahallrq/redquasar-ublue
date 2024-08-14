@@ -18,13 +18,7 @@ RELEASE="$(rpm -E %fedora)"
 rpm-ostree install \
     xorg-x11-server-Xorg \
     xorg-x11-xinit \
-    xorg-x11-drv-evdev \
-    xorg-x11-drv-libinput \
-    xorg-x11-drv-vesa \
-    xorg-x11-drv-fbdev \
-    xorg-x11-drv-intel \
-    xorg-x11-drv-vmware \
-    xorg-x11-drv-qxl \
+    xorg-x11-drivers \
     xorg-x11-xauth \
     mesa-dri-drivers \
     mesa-vulkan-drivers \
@@ -38,7 +32,7 @@ rpm-ostree install \
     xterm
 
 # Multimedia
-rpm-ostree install pipewire-pulseaudio pipewire-utils
+rpm-ostree install pipewire-pulseaudio pipewire-utils wireplumber
 
 # Editing Tools
 rpm-ostree install neovim
