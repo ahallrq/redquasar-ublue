@@ -52,6 +52,8 @@ FROM ghcr.io/ublue-os/${SOURCE_IMAGE}${SOURCE_SUFFIX}:${SOURCE_TAG}
 COPY filesystem /
 COPY scripts /scripts
 
+RUN /scripts/prebuild.sh
+
 RUN mkdir -p /var/lib/alternatives && \
     /scripts/install_packages.sh && \
     /scripts/configure_services.sh && \
