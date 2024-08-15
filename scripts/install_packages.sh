@@ -44,6 +44,9 @@ rpm-ostree install zsh btop iftop iotop tmux inxi
 curl -L -o /etc/yum.repos.d/tailscale.repo https://pkgs.tailscale.com/stable/fedora/tailscale.repo
 rpm-ostree install tailscale
 
+# Desktop
+rpm-ostree install i3 i3-doc i3-config i3-devel polybar jsoncpp-devel xcb-util-xrm-devel xcb-util-cursor-devel libnl3-devel
+
 # this would install a package from rpmfusion
 # rpm-ostree install vlc
 

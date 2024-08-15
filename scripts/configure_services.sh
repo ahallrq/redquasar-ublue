@@ -5,4 +5,4 @@ set -ouex pipefail
 RELEASE="$(rpm -E %fedora)"
 
 systemctl enable podman.socket
-systemctl enable tailscale
+systemctl enable tailscaled
