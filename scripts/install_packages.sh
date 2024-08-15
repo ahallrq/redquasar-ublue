@@ -44,6 +44,9 @@ rpm-ostree install zsh btop iftop iotop tmux inxi
 curl -L -o /etc/yum.repos.d/tailscale.repo https://pkgs.tailscale.com/stable/fedora/tailscale.repo
 rpm-ostree install tailscale
 
+# Display Manager
+rpm-ostree install sddm sddm-themes sddm-x11
+
 # Desktop
 rpm-ostree install i3 i3-doc i3-config i3-devel polybar jsoncpp-devel xcb-util-xrm-devel xcb-util-cursor-devel libnl3-devel
 

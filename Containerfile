@@ -54,10 +54,13 @@ COPY scripts /scripts
 # Display a nice banner telling the user about this build.
 RUN /scripts/prebuild.sh
 
-RUN mkdir -p /var/lib/alternatives && \
+RUN --mount=type=cache,dst=/var/cache/rpm-ostree \
+    mkdir -p /var/lib/alternatives && \
     /scripts/install_packages.sh && \
     /scripts/configure_services.sh && \
     /scripts/just.sh && \
+    /usr/libexec/containerbuild/build-initramfs && \
+    /usr/libexec/containerbuild/cleanup.sh && \
     ostree container commit
 
 ## NOTES:
