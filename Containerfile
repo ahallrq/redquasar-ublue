@@ -43,7 +43,6 @@ ARG SOURCE_TAG="40"
 ## this is a standard Containerfile FROM using the build ARGs above to select the right upstream image
 FROM ghcr.io/ublue-os/${SOURCE_IMAGE}${SOURCE_SUFFIX}:${SOURCE_TAG}
 
-
 ### 3. MODIFICATIONS
 ## make modifications desired in your image and install packages by modifying the build.sh script
 ## the following RUN directive does all the things required to run "build.sh" as recommended.
@@ -52,11 +51,13 @@ FROM ghcr.io/ublue-os/${SOURCE_IMAGE}${SOURCE_SUFFIX}:${SOURCE_TAG}
 COPY filesystem /
 COPY scripts /scripts
 
+# Display a nice banner telling the user about this build.
 RUN /scripts/prebuild.sh
 
 RUN mkdir -p /var/lib/alternatives && \
     /scripts/install_packages.sh && \
     /scripts/configure_services.sh && \
+    /scripts/just.sh && \
     ostree container commit
 
 ## NOTES:
