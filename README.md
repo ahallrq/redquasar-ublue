@@ -12,4 +12,4 @@ This changes constantly and is entirely for my own personal use. Don't blame me 
 
 ## Note
 
-I've cannabalised scripts from other Atomic builds and have tried to provide credit in the files where due (mostly via a link to the respective repo). I may have missed some things though.
+I've cannabalised scripts from other Atomic builds and have tried to provide credit in the files where due (mostly via a link to the respective repo). I may have missed some things though. Because I am terrible at writting shell scripts, some scripts were written with the assistance of AI™. They work though so she'll be roight.
