@@ -1,55 +1,40 @@
 #!/bin/bash
 
-set -ouex pipefail
+set -oue pipefail
 
 RELEASE="$(rpm -E %fedora)"
 
-### Install packages
+# Directory containing the .txt files
+PACKAGE_DIR="/tmp/packages/"
 
-# Packages can be installed from any enabled yum repo on the image.
-# RPMfusion repos are available by default in ublue main images
-# List of rpmfusion packages can be found here:
-# https://mirrors.rpmfusion.org/mirrorlist?path=free/fedora/updates/39/x86_64/repoview/index.html&protocol=https&redirect=1
+# Colours
+GREEN="\033[0;32m"
+YELLOW="\033[1;33m"
+CYAN="\033[0;36m"
+RED="\033[0;31m"
+NC="\033[0m" # No Colour
 
-# Development Tools
-#rpm-ostree install cmake cmake-gui autoconf automake binutils bison flex gcc gcc-c++ gdb glibc-devel libtool make pkgconf strace byacc ccache cscope ctags elfutils indent ltrace perf valgrind
+echo -e "${CYAN}Preparing to install packages...${NC}"
 
-# Xorg (no soyland here thanks)
-rpm-ostree install \
-    xorg-x11-server-Xorg \
-    xorg-x11-xinit \
-    xorg-x11-drivers \
-    xorg-x11-xauth \
-    mesa-dri-drivers \
-    mesa-vulkan-drivers \
-    mesa-libGL \
-    mesa-libEGL \
-    mesa-libGLU \
-    glx-utils \
-    xrandr \
-    xsetroot \
-    xclip \
-    xterm
+# Loop through each .txt file in the directory
+for file in "$PACKAGE_DIR"*.txt; do
+    if [[ -f "$file" ]]; then
+        echo -e "${CYAN}Installing packages from file: ${YELLOW}$file${NC}"
+        
+        # Install packages listed in the file
+        rpm-ostree -q install -qy $(cat "$file") >> /tmp/build-rpm-ostree.log
+        
+        if [[ $? -eq 0 ]]; then
+            echo -e "${GREEN}Finished installing packages from file: ${YELLOW}$file${NC}"
+        else
+            echo -e "${RED}Failed to install packages from file: ${YELLOW}$file${NC}"
+        fi
+    else
+        echo -e "${RED}No package lists found in ${YELLOW}$PACKAGE_DIR${NC}"
+    fi
+done
 
-# Multimedia
-rpm-ostree install pipewire-pulseaudio pipewire-utils wireplumber
-
-# Editing Tools
-rpm-ostree install neovim
-
-# System Tools
-rpm-ostree install zsh btop iftop iotop tmux inxi
-
-# Tailscale
-curl -L -o /etc/yum.repos.d/tailscale.repo https://pkgs.tailscale.com/stable/fedora/tailscale.repo
-rpm-ostree install tailscale
-
-# Display Manager
-rpm-ostree install sddm sddm-themes sddm-x11
-
-# Desktop
-rpm-ostree install i3 i3-doc i3-config i3-devel polybar jsoncpp-devel xcb-util-xrm-devel xcb-util-cursor-devel libnl3-devel
-
-# this would install a package from rpmfusion
-# rpm-ostree install vlc
-
+# Tailscale requires a repo and this script doesn't handle this as of yet so we'll do it manually for now.
+echo -e "${CYAN}Installing Tailscale from the official Tailscale repo.${NC}"
+curl -s -L -o /etc/yum.repos.d/tailscale.repo https://pkgs.tailscale.com/stable/fedora/tailscale.repo
+rpm-ostree install -q tailscale >> /tmp/build-rpm-ostree.log

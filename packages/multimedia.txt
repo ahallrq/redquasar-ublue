@@ -1,0 +1,3 @@
+pipewire-pulseaudio
+pipewire-utils
+wireplumber

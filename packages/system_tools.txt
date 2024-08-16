@@ -1,0 +1,7 @@
+zsh
+btop
+iftop
+iotop
+tmux
+inxi
+qemu-guest-agent

@@ -1,0 +1,9 @@
+i3
+i3-doc
+i3-config
+i3-devel
+polybar
+jsoncpp-devel
+xcb-util-xrm-devel
+xcb-util-cursor-devel
+libnl3-devel
