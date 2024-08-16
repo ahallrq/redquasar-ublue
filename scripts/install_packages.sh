@@ -25,7 +25,7 @@ add_repositories() {
     for REPO in $REPOS; do
         REPO_NAME=$(basename "$REPO")
         echo -e "${CYAN}Adding repository: ${YELLOW}$REPO${NC}"
-        sudo curl -so "/etc/yum.repos.d/$REPO_NAME" "$REPO"
+        curl -so "/etc/yum.repos.d/$REPO_NAME" "$REPO"
     done
 }
 
