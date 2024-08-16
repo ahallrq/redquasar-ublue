@@ -38,36 +38,29 @@ ARG SOURCE_SUFFIX="-main"
 ## SOURCE_TAG arg must be a version built for the specific image: eg, 39, 40, gts, latest
 ARG SOURCE_TAG="40"
 
-
 ### 2. SOURCE IMAGE
 ## this is a standard Containerfile FROM using the build ARGs above to select the right upstream image
 FROM ghcr.io/ublue-os/${SOURCE_IMAGE}${SOURCE_SUFFIX}:${SOURCE_TAG}
 
-### 3. MODIFICATIONS
-## make modifications desired in your image and install packages by modifying the build.sh script
-## the following RUN directive does all the things required to run "build.sh" as recommended.
-
-#COPY build.sh /tmp/build.sh
 COPY filesystem /
-COPY packages /tmp/packages
-COPY scripts /tmp/scripts
+COPY ["scripts","data", "/tmp/buildtmp/"]
 
 # Display a nice banner telling the user about this build.
 RUN --mount=type=cache,dst=/var/cache/rpm-ostree \
-    /tmp/scripts/prebuild.sh
+    /tmp/buildtmp/prebuild.sh
 
 RUN --mount=type=cache,dst=/var/cache/rpm-ostree \
     echo -e "\033[1;32m==[ Package Installation ]==\033[0m" && \
     mkdir -p /var/lib/alternatives && \
-    /tmp/scripts/install_packages.sh
+    /tmp/buildtmp/install_packages.sh
 
 RUN --mount=type=cache,dst=/var/cache/rpm-ostree \
     echo -e "\033[1;32m==[ Services ]==\033[0m" && \
-    /tmp/scripts/configure_services.sh
+    /tmp/buildtmp/configure_services.sh
 
 RUN --mount=type=cache,dst=/var/cache/rpm-ostree \
     echo -e "\033[1;32m==[ Justfiles ]==\033[0m" && \
-    /tmp/scripts/just.sh
+    /tmp/buildtmp/just.sh
 
 RUN --mount=type=cache,dst=/var/cache/rpm-ostree \
     echo -e "\033[1;32m==[ Initramfs ]==\033[0m" && \  

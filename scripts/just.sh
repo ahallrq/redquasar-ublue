@@ -11,5 +11,5 @@ CYAN="\033[0;36m"
 RED="\033[0;31m"
 NC="\033[0m" # No Colour
 
-echo -e "${GREEN}Importing Justfiles...${NC}"
+echo -e "${CYAN}Importing Justfiles...${NC}"
 echo "import \"/usr/share/ublue-os/just/99-redquasar.just\"" >> /usr/share/ublue-os/justfile

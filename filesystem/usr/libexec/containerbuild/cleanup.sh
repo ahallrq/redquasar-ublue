@@ -12,7 +12,7 @@ CYAN="\033[0;36m"
 RED="\033[0;31m"
 NC="\033[0m" # No Colour
 
-echo -e "${GREEN}Performing cleanup operations on container.${NC}"
-rm -rfv /tmp/* || true
-rm -rfv /var/!(cache)
-rm -rfv /var/cache/!(rpm-ostree)
+echo -e "${CYAN}Performing cleanup operations on container.${NC}"
+rm -rf /tmp/* || true
+rm -rf /var/!(cache)
+rm -rf /var/cache/!(rpm-ostree)
