@@ -21,6 +21,6 @@ cat << 'EOF'
 EOF
 echo -e ${NC}
 
-echo -e "${CYAN}Now building ${GREEN}redqausar-ublue.${NC}"
+echo -e "${CYAN}Now building ${GREEN}redquasar-ublue.${NC}."
 echo -e "${CYAN}Visit ${GREEN}https://github.com/ahallrq/redquasar-ublue${CYAN} for usage and license information.${NC}"
 echo ""
