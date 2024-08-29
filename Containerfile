@@ -1,8 +1,10 @@
-ARG SOURCE_IMAGE="base"
-ARG SOURCE_SUFFIX="-main"
-ARG SOURCE_TAG="40"
+ARG SOURCE_IMAGE="bazzite"
+ARG SOURCE_SUFFIX="nvidia"
+ARG SOURCE_TAG="stable"
 
-FROM ghcr.io/ublue-os/${SOURCE_IMAGE}${SOURCE_SUFFIX}:${SOURCE_TAG}
+FROM ghcr.io/ublue-os/${SOURCE_IMAGE}-${SOURCE_SUFFIX}:${SOURCE_TAG}
+
+ARG KERNEL_FLAVOR=""
 
 COPY filesystem /
 COPY ["scripts","data", "/tmp/buildtmp/"]

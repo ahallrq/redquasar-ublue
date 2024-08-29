@@ -1,22 +1,5 @@
 {
     "repos": [
-        "https://pkgs.tailscale.com/stable/fedora/tailscale.repo"
-    ],
-    "WindowManagers": [
-        "i3",
-        "i3-doc",
-        "i3-config",
-        "i3-devel",
-        "polybar",
-        "jsoncpp-devel",
-        "xcb-util-xrm-devel",
-        "xcb-util-cursor-devel",
-        "libnl3-devel"
-    ],
-    "Audio": [
-        "pipewire-pulseaudio",
-        "pipewire-utils",
-        "wireplumber"
     ],
     "ShellUtilities": [
         "zsh",
@@ -24,32 +7,9 @@
         "iftop",
         "iotop",
         "tmux",
-        "inxi",
-        "qemu-guest-agent"
+        "inxi"
     ],
     "Editors": [
         "neovim"
-    ],
-    "X11": [
-        "xorg-x11-server-Xorg",
-        "xorg-x11-xinit",
-        "xorg-x11-drivers",
-        "xorg-x11-xauth",
-        "mesa-dri-drivers",
-        "mesa-vulkan-drivers",
-        "mesa-libGL",
-        "mesa-libEGL",
-        "mesa-libGLU",
-        "glx-utils",
-        "xrandr",
-        "xsetroot",
-        "xclip",
-        "xterm",
-        "sddm",
-        "sddm-themes",
-        "sddm-x11"
-    ],
-    "Networking": [
-        "tailscale"
     ]
 }
