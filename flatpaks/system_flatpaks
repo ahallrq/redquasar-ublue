@@ -17,10 +17,10 @@ org.gimp.GIMP
 org.libreoffice.LibreOffice
 
 com.visualstudio.code
-com.visualstudio.code.tool.podman
+com.visualstudio.code.tool.podman/x86_64/23.08
 org.kicad.KiCad
 org.kicad.KiCad.Library.Footprints
-org.kicad.KiCad.Library.Packages3D
+org.kicad.KiCad.Library.Packages3D/x86_64/stable
 org.kicad.KiCad.Library.Symbols
 
 com.github.tchx84.Flatseal
