@@ -17,8 +17,9 @@ install-system-flatpaks:
     done
     flatpak remote-delete fedora --force 2>/dev/null
     echo "Installing Bazzite recommended flatpaks."
-    ujust _install_system_flatpaks
+    ujust _install-system-flatpaks
     echo "Installing redquasar-ublue system flatpaks.."
     SYSTEM_FLATPAK_LIST="$(curl https://raw.githubusercontent.com/ahallrq/redquasar-ublue/main/flatpaks/system_flatpaks | tr '\n' ' ')"
     flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-    flatpak --system -y install ${SYSTEM_FLATPAK_LIST}
+    flatpak update --appstream
+    flatpak --system -y install --noninteractive --no-related flathub ${SYSTEM_FLATPAK_LIST}
