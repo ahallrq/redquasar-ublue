@@ -79,36 +79,36 @@ systemctl enable podman.socket
 systemctl enable sddm
 systemctl enable tailscaled
 
-# Fix missing users
-install -d /usr/lib/sysusers.d
+# # Fix missing users
+# install -d /usr/lib/sysusers.d
 
-cat > /usr/lib/sysusers.d/90-sddm.conf <<'SYS'
-# type name  id  gecos                               home
-g sddm
-u sddm -  "Simple Desktop Display Manager"           /var/lib/sddm
-m sddm sddm
-SYS
+# cat > /usr/lib/sysusers.d/90-sddm.conf <<'SYS'
+# # type name  id  gecos                               home
+# g sddm
+# u sddm -  "Simple Desktop Display Manager"           /var/lib/sddm
+# m sddm sddm
+# SYS
 
-cat > /usr/lib/sysusers.d/90-libvirt.conf <<'SYS'
-# groups
-g libvirt
-g kvm
-# qemu runtime user (Fedora runs QEMU as an unprivileged user)
-u qemu - "QEMU virtual machine user" /var/lib/libvirt
-# make sure qemu is in kvm and libvirt groups
-m qemu kvm
-m qemu libvirt
-SYS
+# cat > /usr/lib/sysusers.d/90-libvirt.conf <<'SYS'
+# # groups
+# g libvirt
+# g kvm
+# # qemu runtime user (Fedora runs QEMU as an unprivileged user)
+# u qemu - "QEMU virtual machine user" /var/lib/libvirt
+# # make sure qemu is in kvm and libvirt groups
+# m qemu kvm
+# m qemu libvirt
+# SYS
 
-# Fix libvirt
-install -d /usr/lib/tmpfiles.d
-cat > /usr/lib/tmpfiles.d/90-libvirt.conf <<'TMP'
-# path                         mode  user group  age  arg
-d /var/lib/libvirt             0755  root root   -
-d /var/lib/libvirt/images      0755  root root   -
-d /var/cache/libvirt           0755  root root   -
-d /var/log/libvirt             0755  root root   -
-TMP
+# # Fix libvirt
+# install -d /usr/lib/tmpfiles.d
+# cat > /usr/lib/tmpfiles.d/90-libvirt.conf <<'TMP'
+# # path                         mode  user group  age  arg
+# d /var/lib/libvirt             0755  root root   -
+# d /var/lib/libvirt/images      0755  root root   -
+# d /var/cache/libvirt           0755  root root   -
+# d /var/log/libvirt             0755  root root   -
+# TMP
 
 # Set up SDDM config
 install -d /etc/sddm.conf.d
