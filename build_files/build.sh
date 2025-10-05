@@ -27,7 +27,7 @@ dnf5 -y install \
     distrobox \
     podman \
     virt-install libvirt qemu-kvm libvirt-daemon-kvm \
-    virt-manager \
+    virt-manager edk2-ovmf swtpm\
 
 # Add repositories for additional packages
 echo -e "${CYAN}Adding additional package repositories...${NC}"
@@ -56,7 +56,7 @@ dnf5 -y install \
     pavucontrol alsa-utils \
     mate-polkit network-manager-applet \
     qt5-qtwayland qt6-qtwayland \
-    sddm sddm-wayland-generic xorg-x11-server-Xwayland \
+    sddm sddm-wayland-generic sddm-themes xorg-x11-server-Xwayland \
     gnome-keyring
       
 #dnf5 install -y tmux 
@@ -76,3 +76,49 @@ systemctl enable NetworkManager
 systemctl enable podman.socket
 systemctl enable sddm
 systemctl enable tailscaled
+
+# Fix missing users
+install -d /usr/lib/sysusers.d
+
+cat > /usr/lib/sysusers.d/90-sddm.conf <<'SYS'
+# type name  id  gecos                               home
+g sddm
+u sddm -  "Simple Desktop Display Manager"           /var/lib/sddm
+m sddm sddm
+SYS
+
+cat > /usr/lib/sysusers.d/90-libvirt.conf <<'SYS'
+# groups
+g libvirt
+g kvm
+# qemu runtime user (Fedora runs QEMU as an unprivileged user)
+u qemu - "QEMU virtual machine user" /var/lib/libvirt
+# make sure qemu is in kvm and libvirt groups
+m qemu kvm
+m qemu libvirt
+SYS
+
+# Fix libvirt
+install -d /usr/lib/tmpfiles.d
+cat > /usr/lib/tmpfiles.d/90-libvirt.conf <<'TMP'
+# path                         mode  user group  age  arg
+d /var/lib/libvirt             0755  root root   -
+d /var/lib/libvirt/images      0755  root root   -
+d /var/cache/libvirt           0755  root root   -
+d /var/log/libvirt             0755  root root   -
+TMP
+
+# Set up SDDM config
+install -d /etc/sddm.conf.d
+cat > /etc/sddm.conf.d/10-wayland.conf <<'CFG'
+[General]
+# optional: pick a theme that exists; comment out if unsure
+# Theme=Maldives
+
+[Wayland]
+# SDDM’s own greeter runs as a client; make sure qt*-qtwayland is installed
+CompositorCommand=
+# Helpful for some setups:
+GreeterEnvironment=QT_WAYLAND_SHELL_INTEGRATION=layer-shell
+SessionCommand=/usr/bin/wayland-session
+CFG

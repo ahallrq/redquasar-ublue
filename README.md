@@ -8,7 +8,7 @@ Oregano content, donut steel. Or do, idc lol.
 
 ## How to use it
 
-`rpm-ostree rebase ostree-unverified-registry:ghcr.io/ahallrq/redquasar-ublue:latest`
+`bootc switch ghcr.io/ahallrq/redquasar-ublue`
 
 This changes constantly and is entirely for my own personal use. Don't blame me if you destroy your computer.
 
