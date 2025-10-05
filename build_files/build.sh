@@ -56,10 +56,10 @@ dnf5 -y install \
     pavucontrol alsa-utils \
     mate-polkit network-manager-applet \
     qt5-qtwayland qt6-qtwayland \
-    gdm xorg-x11-server-Xwayland \
+    sddm xorg-x11-server-Xwayland \
     gnome-keyring \
     mesa-dri-drivers mesa-vulkan-drivers vulkan-loader \
-    virglrenderer spice-vdagent \
+    virglrenderer
       
 #dnf5 install -y tmux 
 
@@ -76,17 +76,17 @@ dnf5 -y copr disable solopasha/hyprland
 echo -e "${CYAN}Enabling system services...${NC}"
 systemctl enable NetworkManager
 systemctl enable podman.socket
-systemctl enable gdm
+systemctl enable sddm
 systemctl enable tailscaled
 
 # Fix missing users
 install -d /usr/lib/sysusers.d
 
-cat > /usr/lib/sysusers.d/90-gdm.conf <<'SYS'
+cat > /usr/lib/sysusers.d/90-sddm.conf <<'SYS'
 # type name  id  gecos                               home
-g gdm
-u gdm -  "GNOME Display Manager"                     /var/lib/gdm
-m gdm gdm
+g sddm
+u sddm -  "Simple Desktop Display Manager"           /var/lib/sddm
+m sddm sddm
 SYS
 
 cat > /usr/lib/sysusers.d/90-libvirt.conf <<'SYS'
@@ -110,17 +110,20 @@ d /var/cache/libvirt           0755  root root   -
 d /var/log/libvirt             0755  root root   -
 TMP
 
-# # Set up SDDM config
-# install -d /etc/sddm.conf.d
-# cat > /etc/sddm.conf.d/10-wayland.conf <<'CFG'
-# [General]
-# # optional: pick a theme that exists; comment out if unsure
-# # Theme=Maldives
+# Set up SDDM config
+install -d /etc/sddm.conf.d
+cat > /etc/sddm.conf.d/10-wayland.conf <<'CFG'
+[General]
+# optional: pick a theme that exists; comment out if unsure
+# Theme=Maldives
 
-# [Wayland]
-# # SDDM’s own greeter runs as a client; make sure qt*-qtwayland is installed
-# CompositorCommand=
-# # Helpful for some setups:
-# GreeterEnvironment=QT_WAYLAND_SHELL_INTEGRATION=layer-shell
-# SessionCommand=/usr/bin/wayland-session
-# CFG
+[Wayland]
+# SDDM’s own greeter runs as a client; make sure qt*-qtwayland is installed
+CompositorCommand=
+# Helpful for some setups:
+GreeterEnvironment=QT_WAYLAND_SHELL_INTEGRATION=layer-shell
+SessionCommand=/usr/bin/wayland-session
+CFG
+
+systemctl set-default graphical.target
+systemd-sysusers
