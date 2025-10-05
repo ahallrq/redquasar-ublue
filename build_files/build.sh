@@ -57,7 +57,9 @@ dnf5 -y install \
     mate-polkit network-manager-applet \
     qt5-qtwayland qt6-qtwayland \
     gdm xorg-x11-server-Xwayland \
-    gnome-keyring
+    gnome-keyring \
+    mesa-dri-drivers mesa-vulkan-drivers vulkan-loader \
+    virglrenderer spice-vdagent \
       
 #dnf5 install -y tmux 
 
@@ -80,12 +82,12 @@ systemctl enable tailscaled
 # Fix missing users
 install -d /usr/lib/sysusers.d
 
-# cat > /usr/lib/sysusers.d/90-sddm.conf <<'SYS'
-# # type name  id  gecos                               home
-# g sddm
-# u sddm -  "Simple Desktop Display Manager"           /var/lib/sddm
-# m sddm sddm
-# SYS
+cat > /usr/lib/sysusers.d/90-gdm.conf <<'SYS'
+# type name  id  gecos                               home
+g gdm
+u gdm -  "GNOME Display Manager"                     /var/lib/gdm
+m gdm gdm
+SYS
 
 cat > /usr/lib/sysusers.d/90-libvirt.conf <<'SYS'
 # groups
