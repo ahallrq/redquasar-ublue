@@ -18,10 +18,16 @@ NC="\033[0m" # No Colour
 # List of rpmfusion packages can be found here:
 # https://mirrors.rpmfusion.org/mirrorlist?path=free/fedora/updates/39/x86_64/repoview/index.html&protocol=https&redirect=1
 
-# this installs a package from fedora repos
+# Enable the hyprland COPR because Fedora's repos kinda suck
+dnf5 -y copr enable solopasha/hyprland
 
 # Install critical system libraries and tools
-#echo -e "${CYAN}Installing system libraries and tools...${NC}"
+echo -e "${CYAN}Installing system libraries and tools...${NC}"
+dnf5 -y install \
+    distrobox \
+    podman \
+    virt-install libvirt qemu-kvm libvirt-daemon-kvm \
+    virt-manager \
 
 # Add repositories for additional packages
 echo -e "${CYAN}Adding additional package repositories...${NC}"
@@ -48,9 +54,9 @@ dnf5 -y install \
     grim slurp swappy \
     brightnessctl playerctl \
     pavucontrol alsa-utils \
-    polkit-gnome network-manager-applet \
+    mate-polkit network-manager-applet \
     qt5-qtwayland qt6-qtwayland \
-    sddm sddm-wayland-generic xorg-xwayland \
+    sddm sddm-wayland-generic xorg-x11-server-Xwayland \
     gnome-keyring
       
 #dnf5 install -y tmux 
@@ -60,7 +66,8 @@ dnf5 -y install \
 # dnf5 -y copr enable ublue-os/staging
 # dnf5 -y install package
 # Disable COPRs so they don't end up enabled on the final image:
-# dnf5 -y copr disable ublue-os/staging
+# dnf5 -y copr disable ublue-os/staging\
+dnf5 -y copr disable solopasha/hyprland
 
 #### Example for enabling a System Unit File
 
