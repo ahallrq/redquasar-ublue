@@ -9,6 +9,8 @@ CYAN="\033[0;36m"
 RED="\033[1;31m"
 NC="\033[0m" # No Colour
 
+./banner.sh
+
 ### Install packages
 
 # Packages can be installed from any enabled yum repo on the image.
