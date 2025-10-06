@@ -56,7 +56,7 @@ dnf5 -y install \
     pavucontrol alsa-utils \
     mate-polkit network-manager-applet \
     qt5-qtwayland qt6-qtwayland \
-    sddm xorg-x11-server-Xwayland \
+    sddm sddm-breeze accountsservice xorg-x11-server-Xwayland \
     gnome-keyring \
     mesa-dri-drivers mesa-vulkan-drivers vulkan-loader \
     virglrenderer
@@ -115,7 +115,10 @@ install -d /etc/sddm.conf.d
 cat > /etc/sddm.conf.d/10-wayland.conf <<'CFG'
 [General]
 # optional: pick a theme that exists; comment out if unsure
-# Theme=Maldives
+DisplayServer=wayland
+
+[Theme]
+Current=breeze
 
 [Wayland]
 # SDDM’s own greeter runs as a client; make sure qt*-qtwayland is installed
